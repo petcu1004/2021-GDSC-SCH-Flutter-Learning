@@ -12,6 +12,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int elevate = 0;
+
+  //toggle button의 4칸짜리 리스트를 생성하고 값을 false로 설정
+  List<bool> _selection = List.generate(4, (index) => false);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -80,19 +84,48 @@ class _MyAppState extends State<MyApp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton( //TextButton
+                  TextButton(
+                    //TextButton
                     onPressed: () {},
                     child: Text('TextButton'),
                     style: TextButton.styleFrom(primary: Colors.green),
                   ),
                   SizedBox(width: 30),
-                  OutlinedButton( //OutlinedButton
+                  OutlinedButton(
+                      //OutlinedButton
                       onPressed: () {},
                       child: Text('OutlinedButton'),
                       style: OutlinedButton.styleFrom(primary: Colors.green)),
                   SizedBox(width: 30),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.access_alarm)) //IconButton 알람 아이콘 버튼
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.access_alarm)) //IconButton 알람 아이콘 버튼
                 ],
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Text(
+                '<Toggle Button>',
+                style: TextStyle(
+                    color: Colors.black, fontSize: 20, letterSpacing: 1.5),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ToggleButtons(
+                children: [
+                  Icon(Icons.arrow_back),
+                  Icon(Icons.arrow_upward),
+                  Icon(Icons.arrow_forward),
+                  Icon(Icons.arrow_downward)
+                ],
+                isSelected: _selection,
+                onPressed: (int index) {
+                  setState(() {
+                    _selection[index] = !_selection[index];
+                  });
+                },
               )
             ],
           ),
