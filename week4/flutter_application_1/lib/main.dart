@@ -12,6 +12,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int elevate = 0;
+  int count=0;
 
   //toggle button의 4칸짜리 리스트를 생성하고 값을 false로 설정
   List<bool> _selection = List.generate(4, (index) => false);
@@ -126,10 +127,45 @@ class _MyAppState extends State<MyApp> {
                     _selection[index] = !_selection[index];
                   });
                 },
-              )
+              ),
+              SizedBox(height: 50),
+              Text('<FloatingAction Button>',
+              style:TextStyle(color: Colors.black, fontSize: 20, letterSpacing: 1.5),
+              ),
+              SizedBox(height: 20),
+              FloatingActionButton( //Column 안에 껴 있어서! 밖으로 뺴줘야함!
+                child:Icon(Icons.add),
+                backgroundColor:Colors.blueGrey,
+                onPressed:(){
+                  setState(() {
+                    count++;
+                  });
+                }),
+              // SizedBox(height: 50),
+              // ElevatedButton( //Column 안에 껴 있어서! 밖으로 뺴줘야함!
+              //   child:Icon(Icons.forward),
+              //   style: ElevatedButton.styleFrom(primary: Colors.green[300]),
+              //   onPressed:(){
+              //     Fluttertoast.showToast(
+              //       msg:"버튼을 누른 횟수: $count",
+              //       toastLength:Toast.LENGTH_SHORT,
+              //       gravity:ToastGravity.BOTTOM,
+              //       backgroundColor:Colors.grey[300],
+              //       textColor:Colors.black);
+                  
+              //   })
+
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+        child:Icon(Icons.add),
+        backgroundColor:Colors.blueGrey,
+        onPressed:(){
+          setState(() {
+            count++;
+          });
+        }),
       ),
     );
   }
