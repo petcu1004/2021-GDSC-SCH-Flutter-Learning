@@ -45,9 +45,11 @@ class _MyAppState extends State<MyApp> {
               Row(
                 //row이므로 가로축이 주측이 되고
                 //mainAxisAlignment를 통해 가운데 정렬
-                mainAxisAlignment: MainAxisAlignment.center, //그래서 원래 있던 문구가 가운데로 오게 된 것
+                mainAxisAlignment:
+                    MainAxisAlignment.center, //그래서 원래 있던 문구가 가운데로 오게 된 것
                 children: [
-                  ElevatedButton( //클릭시 elevate 변수의 값 +1
+                  ElevatedButton(
+                    //클릭시 elevate 변수의 값 +1
                     onPressed: () {
                       setState(() {
                         elevate += 1;
@@ -72,6 +74,24 @@ class _MyAppState extends State<MyApp> {
                       //문자 사이의 간격
                     ),
                   ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton( //TextButton
+                    onPressed: () {},
+                    child: Text('TextButton'),
+                    style: TextButton.styleFrom(primary: Colors.green),
+                  ),
+                  SizedBox(width: 30),
+                  OutlinedButton( //OutlinedButton
+                      onPressed: () {},
+                      child: Text('OutlinedButton'),
+                      style: OutlinedButton.styleFrom(primary: Colors.green)),
+                  SizedBox(width: 30),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.access_alarm)) //IconButton 알람 아이콘 버튼
                 ],
               )
             ],
