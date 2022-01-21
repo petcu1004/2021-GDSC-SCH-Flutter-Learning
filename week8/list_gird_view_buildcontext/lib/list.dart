@@ -8,18 +8,22 @@ class Lists extends StatefulWidget {
 }
 
 class _ListsState extends State<Lists> {
+  int count=25;
+  final controller=ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: ListView.builder(
         padding: EdgeInsets.all(10),
-        children: [
-          ListTile(title: Text('1')),
-          ListTile(title: Text('2')),
-          ListTile(title: Text('3')),
-          ListTile(title: Text('4')),
-          ListTile(title: Text('5')),
-        ],
+        controller: controller,
+        itemCount: count,
+        itemBuilder: (context, index){
+          return ListTile(
+            title: Text('$index'),
+            onTap: (){},
+          );
+        },
       ),
     );
   }
