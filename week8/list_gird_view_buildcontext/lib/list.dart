@@ -14,7 +14,7 @@ class _ListsState extends State<Lists> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
+      body: ListView.separated(
         padding: EdgeInsets.all(10),
         controller: controller,
         itemCount: count,
@@ -24,6 +24,7 @@ class _ListsState extends State<Lists> {
             onTap: (){},
           );
         },
+        separatorBuilder: (BuildContext context, int index) => const Divider(), //item들 사이사이에 구분선이 추가된 방식
       ),
     );
   }
