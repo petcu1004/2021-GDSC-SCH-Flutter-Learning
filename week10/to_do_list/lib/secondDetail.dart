@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 
 
 class SecondDetail extends StatelessWidget {
@@ -12,7 +12,7 @@ class SecondDetail extends StatelessWidget {
         child: Center(
           child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/third'); 
+              Navigator.of(context).pushReplacementNamed('/third'); // /second로 뒤돌아 갈 수 없음.
             },
             child: Text('세 번째 페이지로 이동하기'),
           ),
