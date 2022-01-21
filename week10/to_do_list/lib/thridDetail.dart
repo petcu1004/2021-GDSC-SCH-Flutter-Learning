@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 
-
 class ThirdDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final String args = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         title: Text('Third Detail'),
       ),
       body: Container(
         child: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('첫 번째 페이지로 이동하기'),
+          child: Text(
+            args,
+            style: TextStyle(fontSize: 30),
           ),
         ),
       ),
