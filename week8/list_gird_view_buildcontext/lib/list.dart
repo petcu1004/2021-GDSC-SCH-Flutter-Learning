@@ -18,7 +18,7 @@ class _ListsState extends State<Lists> {
         padding: EdgeInsets.all(10),
         controller: controller,
         itemCount: count,
-        itemBuilder: (context, index) {
+        itemBuilder: (BuildContext context, int index) { //ListView에 대한 BuildContext 값을 ListTile에 넣어 ListView에 있다는 것을 알림
           return ListTile(
             title: Text('$index'),
             onTap: () {},
