@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:todolist/subDetail.dart';
-import 'package:todolist/thridDetail.dart';
-import 'package:todolist/secondDetail.dart';
+import 'package:to_do_list/subDetail.dart';
+import 'package:to_do_list/thridDetail.dart';
+import 'package:to_do_list/secondDetail.dart';
 
 void main() {
   runApp(MyApp());
