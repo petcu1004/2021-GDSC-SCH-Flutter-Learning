@@ -18,7 +18,7 @@ class SecondDetail extends StatelessWidget {
               keyboardType: TextInputType.text,
             ),
             ElevatedButton(onPressed: (){
-              Navigator.of(context).pop(controller.value.text);
+              Navigator.of(context).pop(controller.value.text); //controller.value.text가 할 일 입력한 값
             }, child: Text('Todo 저장하기'),
             ),
           ],)
