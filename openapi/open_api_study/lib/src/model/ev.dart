@@ -5,8 +5,8 @@ class Ev {
   String? DETAIL_ADRES; // 상세주소
   String? RNTFEE_FREE_AT; // 사용료 무료 여부
   String? GUIDANCE_URL; // 안내 URL
-  String? X_CRDNT_VALUE; // 경도
-  String? Y_CRDNT_VALUE; // 위도
+  String? X_CRDNT_VALUE; // 위도
+  String? Y_CRDNT_VALUE; // 경도
 
   Ev({
     this.CLTUR_EVENT_ETC_NM,
@@ -20,25 +20,29 @@ class Ev {
   });
 
   factory Ev.fromJson(Map<String, dynamic> json) {
-// // 충전기 타입
-//     if (json["chargeTp"] == "1") {
-//       json["chargeTp"] = "충전기 타입 : 완속";
-//     } else if (json["chargeTp"] == "2") {
-//       json["chargeTp"] = "충전기 타입 : 급속";
-//     }
+// 안내 URL
+    if (json["GUIDANCE_URL"] == null) {
+      json["GUIDANCE_URL"] = "정보 없음";
+    }
 
-// // 충전기 상태 코드
-//     if (json["cpStat"] == "1") {
-//       json["cpStat"] = "충전기 상태 : 충전 가능";
-//     } else if (json["cpStat"] == "2") {
-//       json["cpStat"] = "충전기 상태 : 충전중";
-//     } else if (json["cpStat"] == "3") {
-//       json["cpStat"] = "충전기 상태 : 고장/정검";
-//     } else if (json["cpStat"] == "4") {
-//       json["cpStat"] = "충전기 상태 : 통신장애";
-//     } else if (json["cpStat"] == "5") {
-//       json["cpStat"] = "충전기 상태 : 통신미연결";
-//     }
+// 위도
+    if (json["X_CRDNT_VALUE"] == null) {
+      json["X_CRDNT_VALUE"] = "정보 없음";
+    }
+
+// 경도
+    if (json["Y_CRDNT_VALUE"] == null) {
+      json["Y_CRDNT_VALUE"] = "정보 없음";
+    }
+    // else if (json["cpStat"] == "2") {
+    //   json["cpStat"] = "충전기 상태 : 충전중";
+    // } else if (json["cpStat"] == "3") {
+    //   json["cpStat"] = "충전기 상태 : 고장/정검";
+    // } else if (json["cpStat"] == "4") {
+    //   json["cpStat"] = "충전기 상태 : 통신장애";
+    // } else if (json["cpStat"] == "5") {
+    //   json["cpStat"] = "충전기 상태 : 통신미연결";
+    // }
 
 // // 충전 방식
 //     if (json["cpTp"] == "1") {
@@ -70,8 +74,8 @@ class Ev {
       DETAIL_ADRES: json["DETAIL_ADRES"] as String,
       RNTFEE_FREE_AT: json["RNTFEE_FREE_AT"] as String,
       GUIDANCE_URL: json["GUIDANCE_URL"] as String,
-      Y_CRDNT_VALUE: json["X_CRDNT_VALUE"] as String,
-      X_CRDNT_VALUE: json["Y_CRDNT_VALUE"] as String,
+      Y_CRDNT_VALUE: json["Y_CRDNT_VALUE"] as String,
+      X_CRDNT_VALUE: json["X_CRDNT_VALUE"] as String,
     );
   }
 }
