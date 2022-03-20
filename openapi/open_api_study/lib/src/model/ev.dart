@@ -27,12 +27,12 @@ class Ev {
 
 // 위도
     if (json["X_CRDNT_VALUE"] == null) {
-      json["X_CRDNT_VALUE"] = "정보 없음";
+      json["X_CRDNT_VALUE"] = "0";
     }
 
 // 경도
     if (json["Y_CRDNT_VALUE"] == null) {
-      json["Y_CRDNT_VALUE"] = "정보 없음";
+      json["Y_CRDNT_VALUE"] = "0";
     }
     // else if (json["cpStat"] == "2") {
     //   json["cpStat"] = "충전기 상태 : 충전중";

@@ -11,7 +11,7 @@ class EvRepository {
   Future<List<Ev>?> loadEvs() async {
     // var addr = "서울";
     String baseUrl =
-        "http://openapi.seoul.go.kr:8088/6f554567436d73773636757171684a/xml/TnFcltySttusInfo10073/1/10/";
+        "http://openapi.seoul.go.kr:8088/6f554567436d73773636757171684a/xml/TnFcltySttusInfo10073/1/20/";
     final response = await http.get(Uri.parse(baseUrl));
 
     // 정상적으로 데이터를 불러왔다면

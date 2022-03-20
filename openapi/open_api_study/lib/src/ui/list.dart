@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:flutter/services.dart';
 import 'package:open_api_study/src/model/ev.dart';
 import 'package:open_api_study/src/provider/ev_provider.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +13,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'dart:developer';
+
 class ListWidget extends StatefulWidget {
   ListWidget({Key? key}) : super(key: key);
 
@@ -18,10 +23,14 @@ class ListWidget extends StatefulWidget {
 }
 
 class _ListWidgetState extends State<ListWidget> {
-  Completer<GoogleMapController> _controller = Completer();
+  // Completer<GoogleMapController> _controller = Completer();
+  late GoogleMapController _controller;
+  List<Marker> _markers = []; //marker들을 넣을 리스트
+
   bool tf = true;
 
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  // Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  final List<Marker> markers = [];
   LatLng _center = LatLng(37.56795, 127.06619);
 
   static final CameraPosition _start = CameraPosition(
@@ -35,6 +44,7 @@ class _ListWidgetState extends State<ListWidget> {
     //초기화
     _checkPermission();
     super.initState();
+    // setCustomMapPin();
   }
 
   //지도를 사용하기 위해서는 접근 권한을 허용해야 한다.
@@ -63,150 +73,75 @@ class _ListWidgetState extends State<ListWidget> {
     }
   }
 
-  void _onMapCreated(GoogleMapController controller) {
-    var mapController = controller;
-
-    final marker = Marker(
-      markerId: MarkerId('place_name'),
-      position: LatLng(37.56795, 127.06619),
-      infoWindow: InfoWindow(title: "서울", snippet: 'address'),
-    );
-
-    setState(() {
-      markers[MarkerId('place_name')] = marker;
-    });
-  }
-
   late EvProvider _evProvider;
   // EvProvider 호출
-  Widget _makeEvOne(Ev ev) {
-    return Row(
-      children: [
-        Expanded(
-            child: Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // 도서관명
-              Text(
-                ev.CLTUR_EVENT_ETC_NM.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              SizedBox(
-                height: 10,
-              ),
 
-              // 자치구명
-              Text(
-                ev.ATDRC_NM.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              // 기본주소
-              Text(
-                "기본주소 : " +
-                    ev.BASS_ADRES.toString() +
-                    " " +
-                    ev.DETAIL_ADRES.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              // // 상세주소
-              // Text(
-              //   ev.DETAIL_ADRES.toString(),
-              //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              // ),
-              // SizedBox(
-              //   height: 10,
-              // ),
-
-              // 사용료 무료 여부
-              Text(
-                "사용료 무료 여부 : " + ev.RNTFEE_FREE_AT.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              // 안내 URL
-              Text(
-                "안내 URL : " + ev.GUIDANCE_URL.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              // 위도
-              Text(
-                "위도 : " + ev.Y_CRDNT_VALUE.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-
-              // 경도
-              Text(
-                "경도 : " + ev.X_CRDNT_VALUE.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-            ],
-          ),
-        ))
-      ],
-    );
+// 마커 추가
+  addMarker(Ev ev) {
+    markers.add(Marker(
+        // icon: BitmapDescriptor.fromBytes(markerIcon),
+        position: LatLng(double.parse(ev.Y_CRDNT_VALUE.toString()),
+            double.parse(ev.X_CRDNT_VALUE.toString())),
+        markerId: MarkerId(ev.CLTUR_EVENT_ETC_NM.toString()),
+        // icon: BitmapDescriptor.fromBytes(byte),
+        onTap: () {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text(ev.CLTUR_EVENT_ETC_NM.toString()),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        // Text(ev.CLTUR_EVENT_ETC_NM.toString()),
+                        Text("자치구명 : " + ev.ATDRC_NM.toString()),
+                        Text("주소 : " +
+                            ev.BASS_ADRES.toString() +
+                            ev.DETAIL_ADRES.toString()),
+                        Text("사용료 무료 여부 : " + ev.RNTFEE_FREE_AT.toString()),
+                        Text("안내 URL : " + ev.GUIDANCE_URL.toString()),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text("ok"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("cancel"))
+                  ],
+                );
+              });
+        },
+        infoWindow:
+            InfoWindow(title: ev.CLTUR_EVENT_ETC_NM, snippet: ev.BASS_ADRES)));
+    // print(markers);
   }
 
   // 리스트 뷰
   Widget _makeListView(List<Ev> evs) {
+    for (int i = 0; i < evs.length; i++) {
+      addMarker(evs[i]);
+    }
+
     return GoogleMap(
-      onMapCreated: _onMapCreated,
+      onMapCreated: (controller) {
+        _controller = controller;
+      },
       initialCameraPosition: CameraPosition(
         target: _center,
         zoom: 14.0,
       ),
-      markers: markers.values.toSet(),
+      markers: markers.toSet(),
     );
-    // return
-    // ListView.separated(
-    //   itemCount: evs.length,
-    //   itemBuilder: (BuildContext context, int index) {
-    //     return GoogleMap(
-    //       onMapCreated: _onMapCreated,
-    //       initialCameraPosition: CameraPosition(
-    //         target: _center,
-    //         zoom: 14.0,
-    //       ),
-    //       markers: markers.values.toSet(),
-    //     );
-    //     // return Container(
-    //     //     height: 300, color: Colors.white, child: _makeEvOne(evs[index]));
-    //   },
-    //   separatorBuilder: (BuildContext context, int index) {
-    //     return Divider();
-    //   },
-    // );
   }
-
-  // Widget _viewmap(List<Ev> evs) {
-  //   return GoogleMap(
-  //     onMapCreated: _onMapCreated,
-  //     initialCameraPosition: CameraPosition(
-  //       target: _center,
-  //       zoom: 14.0,
-  //     ),
-  //     markers: markers.values.toSet(),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
